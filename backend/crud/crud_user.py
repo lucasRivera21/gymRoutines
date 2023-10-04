@@ -40,3 +40,29 @@ def update_name(db: Session, user_id: str, name: str):
     except:
         db.rollback()
         print("Error")
+
+
+def update_email(db: Session, user_id: str, email: str):
+    db_user = db.query(user_model.User).filter(
+        user_model.User.id == user_id).first()
+    db_user.email = email
+    try:
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    except:
+        db.rollback()
+        print("Error")
+
+
+def update_gender(db: Session, user_id: str, gender: str):
+    db_user = db.query(user_model.User).filter(
+        user_model.User.id == user_id).first()
+    db_user.gender = gender
+    try:
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    except:
+        db.rollback()
+        print("Error")

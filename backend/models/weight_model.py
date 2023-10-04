@@ -2,7 +2,6 @@ import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from db import Base
-# from .user_model import User
 
 
 class Weight(Base):
