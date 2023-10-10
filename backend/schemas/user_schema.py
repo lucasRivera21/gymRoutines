@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from . import weight_schema
+from . import weight_schema, routine_schema
 from uuid import UUID
 
 
@@ -35,6 +35,7 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: str
     weights: list[weight_schema.Weight] = []
+    routines: list[routine_schema.Routine] = []
     is_active: bool
 
     class Config:

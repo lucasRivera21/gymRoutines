@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes import users, weights
+from routes import users, weights, routines
 from sqlalchemy.orm import Session
 from db import SessionLocal, engine, Base
 
@@ -9,6 +9,7 @@ app = FastAPI()
 
 app.include_router(users.user)
 app.include_router(weights.weight)
+app.include_router(routines.routine)
 
 
 def get_db():

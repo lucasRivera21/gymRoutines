@@ -14,3 +14,4 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     weights = relationship("Weight", back_populates="user")
+    routines = relationship("Routine", back_populates="user")
