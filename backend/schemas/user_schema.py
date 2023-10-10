@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Dict
 from . import weight_schema
+from uuid import UUID
 
 
 class NameUpdate(BaseModel):
@@ -34,8 +34,8 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: str
-    weights: List[weight_schema.Weight] = []
-    is_active: bool = True
+    weights: list[weight_schema.Weight] = []
+    is_active: bool
 
     class Config:
         orm_mode = True

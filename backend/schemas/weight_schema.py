@@ -18,7 +18,7 @@ class WeightCreate(WeightBase):
 
 class Weight(WeightBase):
     id: str
-    user_id: int
+    user_id: str
 
     class Config:
         orm_mode = True
