@@ -6,14 +6,13 @@ from typing import List
 class WeightBase(BaseModel):
     weight: int
     magnitude: str
-    date: datetime
 
 
 class WeightUpdate(WeightBase):
     id: str
 
 
-class WeightCreate(BaseModel):
+class WeightCreate(WeightBase):
     pass
 
 
