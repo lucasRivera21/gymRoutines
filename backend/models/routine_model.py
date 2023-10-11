@@ -11,3 +11,4 @@ class Routine(Base):
     user_id = Column(String, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="routines")
+    exercises_user = relationship("ExerciseUser", back_populates="routines")

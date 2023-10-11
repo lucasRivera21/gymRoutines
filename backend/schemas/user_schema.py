@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from . import weight_schema, routine_schema
+from . import weight_schema, routine_schema, exercise_user_schema
 from uuid import UUID
 
 

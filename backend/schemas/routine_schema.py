@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from . import exercise_user_schema
+from typing import List
 
 
 class RoutineBase(BaseModel):
@@ -16,6 +18,7 @@ class RoutineUpdate(RoutineBase):
 class Routine(RoutineBase):
     id: str
     user_id: str
+    exercise: List[exercise_user_schema.ExercisesUser] = []
 
     class Config:
         orm_mode = True
