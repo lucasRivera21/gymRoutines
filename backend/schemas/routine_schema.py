@@ -18,7 +18,7 @@ class RoutineUpdate(RoutineBase):
 class Routine(RoutineBase):
     id: str
     user_id: str
-    exercise: List[exercise_user_schema.ExercisesUser] = []
+    exercises_user: List[exercise_user_schema.ExercisesUser] = []
 
     class Config:
         orm_mode = True

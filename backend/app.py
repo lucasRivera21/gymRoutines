@@ -12,11 +12,3 @@ app.include_router(weights.weight)
 app.include_router(routines.routine)
 app.include_router(exercise_user.exercise_user)
 app.include_router(exercise.exercise)
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
