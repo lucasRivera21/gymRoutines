@@ -27,6 +27,7 @@ def read_users(db: Session = Depends(get_db)):
 def read_user(user_id: str, db: Session = Depends(get_db)):
     return crud_user.get_user(db=db, user_id=user_id)
 
+
 # Create a user
 
 
