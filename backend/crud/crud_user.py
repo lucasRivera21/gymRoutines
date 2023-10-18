@@ -4,6 +4,10 @@ from models import user_model
 from schemas import user_schema
 import hashlib
 from uuid import uuid4
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 # Get all users
 
@@ -16,7 +20,7 @@ def get_users(db: Session) -> list[user_schema.User]:
 
 
 def create_user(db: Session, user: user_schema.UserCreate) -> user_schema.User:
-    password_hashed = hashlib.sha256(user.password.encode()).hexdigest()
+    password_hashed = pwd_context.hash(user.password)
     del user.password
     db_user = user_model.User(
         **user.dict(), hashed_password=password_hashed, id=uuid4())
