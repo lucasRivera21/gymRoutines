@@ -14,9 +14,27 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+'''
+async def auth_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    try:
+        decode_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+         if decode_token['exp'] < datetime.utcnow():
+           raise HTTPException(status_code=401, detail="Token expired")
+        if decode_token is None:
+            raise HTTPException(status_code=401, detail="Invalid token")
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    return decode_token['sub']
+
+'''
+
 
 def get_current_user(db: Session, token: str):
-    decode_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    try:
+        decode_token = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
     db_user = db.query(user_model.User).filter(
         user_model.User.id == decode_token['sub']).first()
     if db_user is None:
