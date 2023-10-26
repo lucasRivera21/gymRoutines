@@ -1,50 +1,69 @@
 import React from 'react'
-import { Formik, useFormik } from 'formik'
 
-const validate = values => {
-    const errors = {};
 
-    if (!values.email) {
-        errors.email = 'Required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-    }
 
-    return errors;
-};
 
 function Register() {
 
-    const formik = useFormik({
-        initialValues: {
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: '',
-            wight: '',
-            gender: '',
-        },
-        validate,
-        onSubmit: values => {
-            console.log(values)
-        },
-    })
+
 
     return (
         <div>
             <h1 className="">Crea una Cuenta</h1>
-            <Formik>
-                <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="name">Nombre:</label>
-                    <input
-                        type="text"
-                        id='email'
-                        name='email'
-                        onChange={formik.handleChange}
-                        value={formik.values.email} />
-                    <button type='submit'>Registrarse</button>
-                </form>
-            </Formik>
+
+            <form >
+
+                {/*NAME INPUT*/}
+                <label htmlFor="name">Nombre:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name='name'
+                />
+
+                {/*WEIGHT INPUT*/}
+                <label htmlFor="weight">Peso:</label>
+                <div>
+                    <input type="number" name='weight' id="weight" />
+                    <select name="weight" id="">
+                        <option value="kg" defaultChecked>Kg</option>
+                        <option value="lb">Lb</option>
+                    </select>
+                </div>
+
+                {/*GENDER INPUT*/}
+                <ul>
+                    <li>
+                        <input type="checkbox" name="M" id="M" />
+                        <label htmlFor="M">
+                            <div>
+                                <p>M</p>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <input type="checkbox" name="F" id="F" />
+                        <label htmlFor="F">
+                            <div>
+                                <p>F</p>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+
+                {/*EMAIL INPUT*/}
+                <label htmlFor="email">Correo:</label>
+                <input
+                    type="text"
+                    id="email"
+                    name='email'
+                />
+
+
+
+                <button type='submit'>Registrarse</button>
+            </form>
+
 
 
             <div className="">
