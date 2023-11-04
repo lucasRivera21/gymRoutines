@@ -5,7 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 
 import PasswordInput from '../components/PasswordInput';
-import EmailInput from '../components/EmailInput';
+import TextInput from '../components/EmailInput';
+import ButtonViolet from '../components/ButtonViolet';
 
 const schema = yup.object({
   email: yup.string().email("Correo inválido").required("Campo requerido"),
@@ -36,14 +37,15 @@ function Login() {
         <form onSubmit={handleSubmit(onSubmit)} className='grid mb-7'>
 
           {/*EMAIL INPUT */}
-          <EmailInput register={register} error={errors.email?.message} />
+          <TextInput register={register} error={errors.email?.message} label={'Email'} placeholder={"Ingrese su correo"} />
 
           {/*PASSWORD INPUT */}
-          <PasswordInput register={register} error={errors.password?.message} />
+          <PasswordInput register={register} error={errors.password?.message} label={'Contraseña'} />
 
 
           {/*SEND BUTTON */}
-          <button type="submit" className='font-semibold text-base bg-violet p-4 rounded-md text-white w-auto mx-auto hover:opacity-80 mt-7'>Entrar</button>
+          {/*<button type="submit" className='font-semibold text-base bg-violet p-4 rounded-md text-white w-auto mx-auto hover:opacity-80 mt-7'>Entrar</button> */}
+          <ButtonViolet text={'Entrar'} />
         </form>
 
         {/*FORGOT PASSWORD LINK*/}
