@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import EmailInput from '../components/EmailInput'
 import PasswordInput from '../components/PasswordInput'
 import ButtonViolet from '../components/ButtonViolet'
@@ -21,14 +21,44 @@ const schema = yup.object({
 function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
 
+    const [sending, setsending] = useState(false)
+    const [error, setError] = useState(false)
+
     const navigate = useNavigate();
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = async data => {
+        setsending(true)
+
+        const userWeight = {}
+        userWeight.weight = parseFloat(data.weight)
+        userWeight.magnitude = data.magnitude
+        delete data.weight
+        delete data.magnitude
+
+
+        const userRes = await fetch('http://127.0.0.1:8000/users/', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } })
+        const res = await userRes.json()
+
+
+        if (userRes.status == 201) {
+            setError(false)
+        } else {
+            setError(true)
+            setsending(false)
+        }
+
+        if (res.id) {
+            await fetch(`http://127.0.0.1:8000/weights/${res.id}`, { method: 'POST', body: JSON.stringify(userWeight), headers: { 'Content-Type': 'application/json' } })
+            setsending(false)
+            setError(false)
+            navigate("/login")
+        }
+    }
 
     return (
-        <div className='  h-screen w-screen flex items-center justify-center '>
-            <div className='max-w-xs m-auto '>
-                <h1 className="text-[2.5rem] font-bold mb-20">Crea una Cuenta</h1>
+        <div className='h-screen w-screen flex items-center justify-center'>
+            <div className='max-w-xs mx-auto '>
+                <h1 className="text-[2.5rem] font-bold mb-16">Crea una Cuenta</h1>
 
                 <form className='grid grid-cols-2' onSubmit={handleSubmit(onSubmit)}>
 
@@ -50,6 +80,7 @@ function Register() {
                     {/*EMAIL INPUT*/}
                     <div className='col-span-full mb-4'>
                         <EmailInput register={register} error={errors.email?.message} />
+                        {error ? <span className='text-red-500 text-sm block'>Este email ya existe</span> : null}
                     </div>
 
                     {/*PASSWORD INPUT*/}
@@ -63,14 +94,15 @@ function Register() {
                     </div>
 
                     {/*SEND BUTTON */}
-                    <div className='col-span-full flex py-5 '>
-                        <ButtonViolet text={'Registrarse'} />
+                    <div className='col-span-full flex py-5'>
+                        <ButtonViolet text={'Registrarse'} sending={sending} />
+
                     </div>
 
                 </form>
 
                 <div className="flex w-fit mx-auto">
-                    <p className="">¿Ya tienes una cuenta?</p><a className="underline-offset-2 underline cursor-pointer" onClick={() => navigate("/login")}>Inicia Sesión</a>
+                    <p className="mr-1">¿Ya tienes una cuenta?</p><a className="underline-offset-2 underline cursor-pointer" onClick={() => navigate("/login")}>Inicia Sesión</a>
                 </div>
             </div>
         </div>
